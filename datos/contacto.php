@@ -79,6 +79,47 @@ if($post['accion']=='consultar'){
     }
     echo $respuesta;
 }
+// metodo y accion para eliminar contactos
+
+if($post['accion']=='eliminar'){
+    $conex=new cls_conexion();
+    $conex=$conex->conectar();
+    $sentencia=sprintf("DELETE from contacto
+    where cod_contacto='%s'",
+    $conex->real_escape_string($post['cod_contacto']));
+    $rs=mysqli_query($conex,$sentencia);
+    if($rs){
+        $respuesta=json_encode(array("estado"=>true,"mensaje"=>"Contacto eliminado correctamente"));
+    }
+    else{
+        $respuesta=json_encode(array("estado"=>false,"mensaje"=>"Error al eliminar el contacto"));
+    }
+    echo $respuesta;
+}
+
+// metodo y accion para actualizar contactos
+
+if($post['accion']=='actualizar'){
+    $conex=new cls_conexion();
+    $conex=$conex->conectar();
+    $sentencia=sprintf("UPDATE contacto
+    set nom_contacto='%s',ape_contacto='%s',telefono_contacto='%s',email_contacto='%s'
+    where cod_contacto='%s'",
+    $conex->real_escape_string($post['nombre']),
+    $conex->real_escape_string($post['apellido']),
+    $conex->real_escape_string($post['telefono']),
+    $conex->real_escape_string($post['email']),
+    $conex->real_escape_string($post['cod_contacto']));
+    $rs=mysqli_query($conex,$sentencia);
+    if($rs){
+        $respuesta=json_encode(array("estado"=>true,"mensaje"=>"Contacto actualizado correctamente"));
+    }
+    else{
+        $respuesta=json_encode(array("estado"=>false,"mensaje"=>"Error al actualizar el contacto"));
+    }
+    echo $respuesta;
+}
+
 ?>
 
 
