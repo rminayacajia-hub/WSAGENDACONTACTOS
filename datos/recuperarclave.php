@@ -18,7 +18,7 @@ if($post['accion']=='recuperarclave'){
     $rs=mysqli_query($conex,$sentencia);
     if(mysqli_num_rows($rs)>0){
         $row=mysqli_fetch_assoc($rs);
-        $respuesta=json_encode(array("estado"=>true, "codigo"=>$row['cod_persona']));
+        $respuesta=json_encode(array("estado"=>true, "codigo"=>$row['clave_persona']));
     }else{
         $respuesta=json_encode(array("estado"=>false,"mensaje"=>"Usuario no encontrado"));
     }
