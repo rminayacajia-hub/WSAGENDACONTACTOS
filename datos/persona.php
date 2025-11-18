@@ -28,6 +28,33 @@ if($post['accion']=='loggin'){
     }
     echo $respuesta;
 }
+
+// crear la acciona insertar 
+
+if($post['accion']=='insertar'){
+    $conex = new cls_conexion();
+    $conex = $conex->conectar();
+
+    $ci     = $conex->real_escape_string($post['ci_persona']);
+    $nom    = $conex->real_escape_string($post['nom_persona']);
+    $ape    = $conex->real_escape_string($post['ape_persona']);
+    $correo = $conex->real_escape_string($post['correo_persona']);
+    $clave  = $conex->real_escape_string($post['clave_persona']);
+
+    $sentencia = "INSERT INTO persona(ci_persona, nom_persona, ape_persona, correo_persona, clave_persona) 
+                  VALUES('$ci', '$nom', '$ape', '$correo', '$clave')";
+
+    if(mysqli_query($conex, $sentencia)){
+        $respuesta = json_encode(array("estado" => true));
+    }else{
+        $respuesta = json_encode(array(
+            "estado"  => false,
+            "mensaje" => "Error al insertar: " . mysqli_error($conex)
+        ));
+    }
+
+    echo $respuesta;
+}
 ?>
 
 
