@@ -20,7 +20,7 @@ if($post['accion']=='consultarDato'){
         {
     
             $row=mysqli_fetch_assoc($rs);    
-            $respuesta=json_encode(array("estado"=>true,"contacto"=>$row));
+            $respuesta=json_encode(array("estado"=>true,"datos"=>$row));
     }
         else{
         $respuesta=json_encode(array("estado"=>false,"mensaje"=>"No existen contactos"));
@@ -69,10 +69,11 @@ if($post['accion']=='consultar'){
             $datos[]=array(
         'codigo'=>$row['cod_contacto'],
         'nombre'=>$row['nom_contacto'],
-        'apellido'=>$row['ape_contacto']
-        );
+        'apellido'=>$row['ape_contacto'],
+        'telefono'=>$row['telefono_contacto']
+                );
     }
-    $respuesta=json_encode(array("estado"=>true,"personas"=>$datos));
+    $respuesta=json_encode(array("estado"=>true,"datos"=>$datos));
     }
         else{
         $respuesta=json_encode(array("estado"=>false,"mensaje"=>"No existen contactos"));

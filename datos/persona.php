@@ -55,6 +55,32 @@ if($post['accion']=='insertar'){
 
     echo $respuesta;
 }
+if($post['accion']=="consulta")
+{
+    $conex= new Cls_conexion();
+    $conex=$conex->conectar();
+    $sentencia=sprintf("SELECT * from persona
+    where cod_persona='%s'",
+    $conex->real_escape_string($post['cod_persona']));
+    $rs= mysqli_query($conex,$sentencia);
+    if(mysqli_num_rows($rs)>0)
+    {
+       $row= mysqli_fetch_assoc($rs);
+            $datos=array(
+                'codigo'=>$row['cod_persona'],
+                'nombre'=>$row['nom_persona'],
+                'apellido'=>$row['ape_persona']
+            );
+       
+        $respuesta=json_encode(array("estado"=>true, "persona"=>$datos));
+    }
+    else
+    {
+        $respuesta=json_encode(array("estado"=>false, "mensaje"=>"No existe persona"));
+    }
+echo $respuesta;
+}
+ 
 ?>
 
 
